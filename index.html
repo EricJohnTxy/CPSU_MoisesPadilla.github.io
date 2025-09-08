@@ -1,1 +1,951 @@
-<h3>hello world </h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPSU Moises Padilla Official Website</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="./assets/icons/CPSU_logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        .hamburger {
+            cursor: pointer;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #fafafa;
+            margin: 2px;
+            transition: 0.4s;
+            cursor: pointer;
+        }
+        .menu {
+                position: fixed;
+                transform: translateX(-500%);
+                transition: transform 1.5s ease-in-out;
+                z-index: 999;
+            }
+        .menu.active {
+                transform: translateX(0);
+            }
+         .hamburger {
+                display: flex;
+            }
+        .box-shodow {
+            box-shadow: 0px 4px 6px rgb(0, 0, 0, 0.9);
+        }
+        .shadow-white {
+            box-shadow: 0px 4px 6px rgb(255, 255, 255, 0.9);
+        }
+        #map {
+        height: 500px;
+        width: 1200px;
+        pointer-events: none;
+        filter: grayscale(10%);
+        transition: filter 0.3s ease;
+        }
+         @keyframes scroll {
+            0% {
+            transform: translateX(0);
+            }
+            100% {
+            transform: translateX(-50%);
+            }
+        }
+
+        .animate-scroll {
+            animation: scroll 30s linear infinite;
+            width: max-content;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="font-poppins bg-[#000000]">
+    <div class="w-full h-auto sticky top-0 z-50 shadow-[0px_10px_20px_rgba(0,0,0,0.5)]">
+        <div id="header" class=" w-full h-auto flex justify-evenly items-center bg-[#000000] text-[#FCFCFC] text-[11px] p-3 gap-5">
+        <span class="w-auto flex items-center gap-5 max-md:gap-3 text-[13px] font-semibold">
+            <a href="#" class="outline-none flex items-center justify-center text-center gap-2 pointer max-md:pr-3 pr-5 border-r border-r-[#FCFCFC]">
+                <span class="font-bold text-[13px]">f</span>
+                <span class="max-md:hidden">CPSU-MPC Web Admin</span>
+            </a>
+            <a href="#" class="outline-none flex items-center justify-center text-center gap-2 pointer max-md:pr-3 pr-5 border-r border-r-[#FCFCFC]">
+                <i class="bi bi-envelope"></i>
+                <span class="max-md:hidden">cpsu_mpc@cpsu.edu.ph</span>
+            </a>
+            <a href="#" class="outline-none flex items-center justify-center text-center gap-2 pointer max-md:pr-3">
+                <i class="bi bi-telephone"></i>
+                <span class="max-md:hidden">+6399-3117-4271</span>
+            </a>
+        </span>
+        <a href="../admin/index.php" target="blank" class="outline-none flex items-center justify-center text-center gap-2 pointer pl-5 max-md:pl-3 border-l pointer border-l-[#FCFCFC] text-[13px] font-semibold">
+            <i class="bi bi-wifi"></i>
+            <span class="mx-md:hidden">Cpsu Web Admin</span>
+        </a>
+    </div>
+
+        <div class="w-full h-auto flex justify-evenly items-center text-center bg-[#104618] text-[#fafafa] p-2 gap-10">
+            <span class="flex items-center justify-center text-center gap-2">
+                <img src="./assets/icons/CPSU_logo.png" alt="CPSU Logo" class="w-[50pxpx] h-[49.73px]">
+                <img src="./assets/icons/bagong-pilipinas-logo.png" alt="BGM Logo" class="w-[50pxpx] h-[49.73px]">
+                <span class="flex flex-col items-start max-md:items-center justify-center text-left pl-3 border-l border-l-gray-300">
+                    <span class="text-[16px] font-semibold tracking-widest">CENTRAL PHILIPPINES STATE UNIVERSITY</span>
+                    <span class="text-[12px] font-semibold tracking-wide w-full flex text-left">MOISES PADILLA CAMPUS</span>
+                </span>
+            </span>
+            <span class="max-md:hidden flex flex-wrap items-center justify-center text-center gap-1 p-1">
+                <a href="https://ched.gov.ph/" target="blank"><img src="./assets/images/CHED.png" alt="ched_logo" class="w-[35px] h-[35px] pointer"></a>
+                <a href="https://www.foi.gov.ph/" target="blank"><img src="./assets/images/FOI.webp" alt="foi_logo" class="w-[35px] h-[35px] rounded-full pointer"></a>
+                <a href="https://www.dbm.gov.ph/" target="blank"><img src="./assets/images/dbm.jpg" alt="dbm_logo" class="w-[35px] h-[35px] pointer rounded-full"></a>
+                <a href="https://en.wikipedia.org/wiki/Philippine_Association_of_State_Universities_and_Colleges" target="blank"><img src="./assets/images/pasuc.webp" alt="pasuc_logo" class="w-[35px] h-[35px] rounded-full pointer"></a>
+                <a href="https://www.transparency.org/en/countries/philippines" target="blank"><img src="./assets/images/pts.jpg" alt="pts_logo" class="w-[35px] h-[35px] pointer rounded-full"></a>
+                <a href="https://ps-philgeps.gov.ph/home/" target="blank"><img src="./assets/images/ps.webp" alt="ps_logo" class="w-[65px] h-[35px] rounded-[12px] object-contain pointer"></a>
+                <a href="https://www.aaccup.com/" target="blank"><img src="./assets/images/AACCUP.png" alt="aaccup_logo" class="w-[35px] h-[35px] pointer"></a>
+            </span>
+        </div>
+
+                <div class="w-full h-auto flex justify-center items-center text-center bg-green-700 gap-10 text-[#fafafa] p-4">
+                    <ul class="max-md:hidden flex items-center justify-center text-center gap-10 text-[16px] font-bold text-[16px]">
+                        <li><a class="border-b-[2px] border-white" href="./index.php">HOME</a></li>
+                        <li><a class="hover:border-b-[2px] hover:border-white" href="./about.php">ABOUT</a></li>
+                        <div class="relative group">
+                        <button class="flex items-center gap-2 text-white">
+                            ACADEMICS
+                            <i class="bi bi-caret-down-fill"></i>
+                        </button>
+                        <div class="absolute left-0 z-20 hidden group-hover:block bg-white border shadow-md mt-0 rounded-lg">
+                            <ul class="w-48 py-2">
+                            <li><a href="academics/program-offers.php" class="block px-4 text-[#15421C] py-2 hover:bg-green-900 hover:text-white">Program Offers</a></li>
+                            <li><a href="academics/admission.php" class="block px-4 py-2 text-[#15421C] hover:bg-green-900 hover:text-white">Admission</a></li>
+                            </ul>
+                        </div>
+                        </div>
+                        <div class="relative group">
+                        <button class="flex items-center gap-2 text-white">
+                            ADMINISTRATION
+                            <i class="bi bi-caret-down-fill"></i>
+                        </button>
+                        <div class="absolute left-0 z-20 hidden group-hover:block bg-white border shadow-md mt-0 rounded-lg">
+                            <ul class="w-48 py-2 items-center">
+                            <li><a href="administration/key-officials.php" class="block px-4 py-2 text-[#15421C] hover:bg-green-900 hover:text-white">Key Officials</a></li>
+                            <li><a href="administration/program-heads.php" class="block px-4 py-2 text-[#15421C] hover:bg-green-900 hover:text-white">Program Head</a></li>
+                            <li><a href="administration/faculty.php" class="block px-4 py-2 text-[#15421C] hover:bg-green-900 hover:text-white">Faculty</a></li>
+                            <li><a href="administration/administrative-functions.php" class="block px-4 py-2 text-[#15421C] hover:bg-green-900 hover:text-white">Administrative Functions</a></li>
+                            </ul>
+                        </div>
+                        </div>
+                    </ul>
+                    <div class="hamburger flex max-md:w-full max-md:items-end flex-col pointer" onclick="toggleMenu()">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+
+                        <div class="menu flex flex-col top-0 left-0 h-[100dvh] w-[300px] max-md:w-[250px] bg-white  items-center text-center text-[#fafafa] gap-2 p-5 box-shadow border-4 border-green-900">
+                            <ul class="flex flex-col gap-5 py-5 max-md:pt-1 font-[500] text-[13px] text-[#000000] text-left">
+                                <span class="flex flex-row items-center justify-start text-center text-green-900 mb-5 gap-2 pb-5 border-b-2 border-green-900">
+                                    <img src="assets/icons/CPSU_logo.png" alt="cpsu_logo" class="w-[100px] h-[80px] object-contain">
+                                    <span class="text-[15px] w-full flex text-left font-bold px-2 py-3 border-l-2 border-green-900">CENTRAL PHILIPPINES STATE UNIVERSITY MOISES PADILLA CAMPUS</span>    
+                                </span>
+                                <li class="bg-green-900 text-white p-2 rounded-[10px]">
+                                    <a href="./index.php" class="px-3">HOME</a>
+                                </li>
+                                <li class="bg-white text-green-900 hover:bg-green-900 hover:text-white p-2 rounded-[12px]">
+                                    <a href="./about.php" class="px-3">ABOUT</a>
+                                </li>
+                                  <div class="relative inline-block text-left items-left justify-left">
+                                    <button id="dropdownButton" class="bg-white text-green-900 px-3 hover:text-white w-full h-auto p-2 rounded-[12px] hover:bg-green-900 gap-2 flex text-center items-center justify-start">
+                                    ACADEMICS
+                                    <i class="bi bi-caret-down-fill"></i>
+                                    </button>
+                                    <div id="dropdownMenu" class="z-10 absolute mt-2 w-full bg-white border py-2 border-gray-200 rounded-[12px] shadow-lg hidden">
+                                    <a href="academics/program-offers.php" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Program Offers</a>
+                                    <a href="academics/admission.php" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Admission</a>
+                                    </div>
+                                </div>
+                                    <div class="relative inline-block text-left items-left justify-left">
+                                        <button id="dropdownButtontwo" class="bg-white text-green-900 hover:text-white w-full px-3 h-auto p-2 rounded-[12px] hover:bg-green-900 gap-2 flex text-left items-left justify-start">
+                                            ADMINISTRATION
+                                            <i class="bi bi-caret-down-fill"></i>
+                                        </button>
+                                        <div id="dropdownMenutwo" class="z-10 absolute mt-2 w-full bg-white border py-2 border-gray-200 rounded-[12px] shadow-lg hidden">
+                                            <a href="./administration/key-officials.php" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Key Official</a>
+                                            <a href="./administration/program-heads.php" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Program Head</a>
+                                            <a href="./administration/faculty.php" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Faculty</a>
+                                            <a href="./administration/administrative-functions.php" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Administrative Functions</a>
+                                      </div>
+                                  </div>
+                            </ul>
+                                <div class=" w-full h-auto flex flex-col items-left justify-left text-left gap-1 p-2 border-y-2 border-green-900 py-5 max-md:pt-2">
+                                    <span class="text-[18px] max-md:text-[12px] text-green-900 font-semibold italic">Follow us:</span>
+                                    <div class="w-full h-auto flex flex-col items-left justify-left text-left gap-1">
+                                        <span class="flex items-center gap-2 max-md:text-[12px]">
+                                            <span class="text-[18px] text-blue-500">f</span>
+                                            <a href="" target="blank" class="text-[#585858] font-semibold italic">CPSU-Moises Padilla</a>
+                                        </span>
+                                        <span class="flex items-center gap-2 max-md:text-[12px]">
+                                            <span class="text-[18px] text-blue-500">f</span>
+                                            <a href="" target="blank" class="text-[#585858] font-semibold italic">SAFE Center CPSU-MPC</a>
+                                        </span>
+                                        <span class="flex items-center gap-2 max-md:text-[12px]">
+                                            <span class="text-[18px] text-blue-500">f</span>
+                                            <a href="" target="blank" class="text-[#585858] font-semibold italic">CPSU-MPC CSS</a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="w-full h-auto flex flex-col items-left justify-left font-semibold text-left text-[16px] text-[#585858] pt-2 p-1">
+                                    <span>System Adviser : Elmilver Arquero</span>
+                                    <span>Developed by : CPS</span>
+                                </div>
+                        </div>
+                </div>
+    </div>
+
+            <div id="hm" class="relative w-full h-[800px] max-sm:h-[500px] overflow-hidden">
+                <video class="absolute top-0 left-0 w-full h-full object-cover" 
+                    autoplay 
+                    loop 
+                    muted 
+                    playsinline>
+                    <source src="assets/video/ssstik.io_@silentrefuges_1757327464637.mp4" type="video/mp4">
+                </video>
+            </div>
+
+
+                <div class="w-full h-auto flex flex-col justify-center items-center text-center bg-[#FFFDFD] text-[#fafafa] p-3 gap-4 pb-10">
+                    <span class="flex items-center justify-center text-center gap-2 p-2 pt-5 border-b-2 border-b-[#000000]">
+                        <img src="assets/images/leaves_one.png" alt="leaves_one" class="w-[88px] h-[75px] max-sm:w-[70px] h-[30px]">
+                        <span class="flex flex-col items-center justify-center text-center p-1">
+                            <img src="assets/images/crown.png" alt="cpsulogo" class="w-[100px] h-[90px] object-cover">
+                            <span class="text-[32px] max-md:text-[15px] text-[#15421C] font-bold tracking-widest">PROGRAM OFFERS</span>
+                            <span class="text-[15px] max-md:text-[10px] text-[#000000] font-bold">CENTRAL PHILIPPINES STATE UNIVERSITY - MOISES PADILLA CAMPUS</span>
+                        </span>
+                        <img src="assets/images/leaves.png" alt="leaves_two" class="w-[88px] h-[75px] max-sm:w-[70px] h-[30px]">
+                    </span>
+                    <div class="w-full h-auto flex flex-wrap justify-center items-center text-center gap-4 p-1 bg-[#FFFDFD]">
+                        <div class="text-[#000000] w-[400px] h-[500px] border relative bg-cover bg-center flex flex-col justify-center items-center text-center text-[#fafafa]  transition-all duration-500 ease-in-out shadow-[0px_25px_45px_rgba(34,72,123,0.9)] border-none hover:translate-y-[-10px]" style="background-image: url(assets/images/coted.webp);">
+                            <div class="absolute inset-0 bg-[#22487B] bg-opacity-85 flex flex-col justify-center items-center text-center text-[#fafafa] gap-5 p-2 px-3">
+                                <img src="assets/images/logo-coted.png" alt="beed_logo" class="w-[117px] h-[117px] object-cover">
+                                <span class="text-[25px] font-semibold tracking-widest leading-tight max-sm:text-[20px]">Bachelor of Science in <br> Secondary Education</span>
+                                <span class="text-[15px] text-center max-md:text-[14px]">The Bachelor of Science in Elementary Education (BSEd) at CPSU Moises Padilla is a four-year program that prepares future educators to teach at the elementary level. It equips students with teaching strategies, child-centered approaches, and a strong foundation in both content and pedagogy.</span>
+                            </div>
+                        </div>
+                        <div class="text-[#000000] w-[400px] h-[500px] border relative bg-cover bg-center flex flex-col justify-center items-center text-center transition-all duration-500 ease-in-out shadow-[0px_25px_45px_rgba(43,36,84,0.9)] border-none hover:translate-y-[-10px]" style="background-image: url(assets/images/cssbg.jpg);">
+                            <div class="absolute inset-0 bg-[#2B2454] bg-opacity-85 flex flex-col justify-center items-center text-center text-[#fafafa] gap-5 p-2 px-3">
+                                <img src="assets/images/CCS.png" alt="css_logo" class="w-[117px] h-[117px] object-cover">
+                                <span class="text-[25px] font-semibold tracking-widest leading-tight max-sm:text-[20px]">Bachelor of Science in Information Technology</span>
+                                <span class="text-[15px] max-sm:text-[14px]">The College of Computer Studies (CCS) at CPSU Moises Padilla offers innovative and industry-relevant programs that prepare students for careers in IT and computing. With hands-on training in programming, web development, networking, and system analysis, CCS equips future professionals with the technical skills and critical thinking needed in today’s digital world.</span>
+                            </div>
+                        </div>
+                        <div class="text-[#000000] w-[400px] h-[500px] border relative bg-cover bg-center transition-all duration-500 ease-in-out shadow-[0px_25px_45px_rgba(17,55,22,0.9)] hover:translate-y-[-10px] border-none" style="background-image: url(assets/images/bsabbg.jpg);">
+                            <div class="absolute inset-0 bg-[#113716] bg-opacity-85 flex flex-col justify-center items-center text-center text-[#fafafa] gap-5 p-2 px-3">
+                                <img src="assets/images/BSAB.png" alt="bsab_logo" class="w-[117px] h-[117px] object-cover">
+                                <span class="text-[25px] font-semibold tracking-widest leading-tight max-sm:text-[20px]">Bachelor of Science in Agricultural Business</span>
+                                <span class="text-[15px] max-sm:text-[14px]">The Bachelor of Science in Agricultural Business (BSAB) program at CPSU Moises Padilla equips students with the knowledge and skills needed to excel in the agricultural industry. It covers areas such as agribusiness management, marketing, and sustainable practices, preparing graduates for diverse roles in agriculture and agribusiness.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <div class=" w-full h-auto flex justify-center bg-white py-5">
+                <div class="w-[1300px] overflow-hidden py-10 pt-5 relative bg-transparent shadow-[4px_0_10px_-1px_rgba(0,0,0,0.1),-4px_0_10px_-1px_rgba(0,0,0,0.1)]">
+                    <div class="flex animate-scroll gap-20">
+
+                        <img src="assets/images/CHED.png" class="h-[150px] w-auto object-cover flex-shrink-0" alt="ched">
+                        <img src="assets/icons/bagong-pilipinas-logo.png" class="h-[150px] w-auto object-cover flex-shrink-0" alt="bagong-pilipinas">
+                        <img src="assets/images/FOI.webp" class="h-[150px] w-auto object-cover flex-shrink-0" alt="foi">
+                        <img src="assets/images/dbm.jpg" class="h-[150px] w-auto object-cover flex-shrink-0" alt="dbm">
+                        <img src="assets/images/pasuc.webp" class="h-[150px] w-auto object-cover flex-shrink-0" alt="pasuc">
+                        <img src="assets/images/pts.jpg" class="h-[150px] w-auto object-cover flex-shrink-0" alt="pts">
+                        <img src="assets/images/ps.webp" class="h-[150px] w-auto object-cover flex-shrink-0" alt="ps">
+                        <img src="assets/images/AACCUP.png" class="h-[150px] w-auto object-cover flex-shrink-0" alt="aaccup">
+
+                        <img src="assets/images/CHED.png" class="h-[150px] w-auto object-cover flex-shrink-0" alt="ched">
+                        <img src="assets/icons/bagong-pilipinas-logo.png" class="h-[150px] w-auto object-cover flex-shrink-0" alt="bagong-pilipinas">
+                        <img src="assets/images/FOI.webp" class="h-[150px] w-auto object-cover flex-shrink-0" alt="foi">
+                        <img src="assets/images/dbm.jpg" class="h-[150px] w-auto object-cover flex-shrink-0" alt="dbm">
+                        <img src="assets/images/pasuc.webp" class="h-[150px] w-auto object-cover flex-shrink-0" alt="pasuc">
+                        <img src="assets/images/pts.jpg" class="h-[150px] w-auto object-cover flex-shrink-0" alt="pts">
+                        <img src="assets/images/ps.webp" class="h-[150px] w-auto object-cover flex-shrink-0" alt="ps">
+                        <img src="assets/images/AACCUP.png" class="h-[150px] w-auto object-cover flex-shrink-0" alt="aaccup">
+                    </div>
+                </div>
+            </div>
+
+                <div class="w-full-h-auto flex flex-col justify-center items-center text-center bg-[#ffffff] text-[#000000] p-3 pt-10 pb-10 gap-5">
+                    <span class="w-full h-auto flex items-center justify-evenly text-center text-[#000000] gap-[25px]">
+                        <span class="flex flex-col items-left justify-left text-left p-2 pl-4 border-l-4 border-l-[#104618]">
+                            <span class="text-[24px] tracking-widest font-semibold">LATEST UPDATE</span>
+                            <span class="text-[18px]">Check the latest updates, important reminders, and other activities</span>
+                        </span>
+                        <span class="max-md:hidden"></span>
+                        <span class="max-md:hidden"></span>
+                    </span>
+                    <div class="w-full h-auto flex flex-wrap justify-center text-center  gap-4 max-md:gap-10 p-2 pt-10 pb-5 bg-[#ffffff]">
+                        <div class="text-[#000000] w-[400px] h-auto flex flex-col justify-center items-center text-center gap-10">
+                            <div class="w-full h-[545px] flex flex-col  items-center text-center shadow-[0px_10px_20px_rgba(0,0,0,0.5)] rounded-[1px]">
+                                <img src="assets/images/cssbg.jpg" alt="post-image" class="w-full h-[200px] object-cover object-center">
+                                <span class="w-full flex items-start gap-3 px-4 p-2 text-[14px] text-[#685F5F] max-sm:text-[10px]">
+                                    <i class="bi bi-calendar-fill text-[12px] max-sm:text-[10px]"></i>
+                                    <span>July 25,2025</span>
+                                    <i class="bi bi-person-fill text-[15px] max-sm:text-[10px]"></i>
+                                    <span>Published by CPSU-MPC</span>
+                                </span>
+                                <span class="px-4 items-left justify-left max-sm:text-[14px] text-left font-semibold">CPSU 2025 AQUINTANCE PARTY, a warm celebration for the new student’s in CPSU - MPC 2025</span>
+                                <span class="p-2 py-4 px-4 text-center text-[14px] max-sm:text-[12px] leading-loose">Giving the new student’s there memorable experienced in their college journey, many activities and games that officers had set up just for them. About 400 new students in different courses have enjoyed in this program a lifetime memories that they will cherished.</span>
+                                <button class="w-full items-end justiy-end text-end p-2 px-10">
+                                    <a class="p-3 bg-[#D9D9D9] text-[12px]" href="#">Read more</a>
+                                </button>
+                            </div>
+                            <div class="w-full h-[545px] flex flex-col  items-center text-center shadow-[0px_10px_20px_rgba(0,0,0,0.5)] rounded-[1px]">
+                                <img src="assets/images/bsabbg.jpg" alt="post-image" class="w-full h-[200px] object-cover object-center">
+                                <span class="w-full flex items-start gap-3 px-4 p-2 text-[14px] text-[#685F5F] max-sm:text-[10px]">
+                                    <i class="bi bi-calendar-fill text-[12px] max-sm:text-[10px]"></i>
+                                    <span>July 25,2025</span>
+                                    <i class="bi bi-person-fill text-[15px] max-sm:text-[10px]"></i>
+                                    <span>Published by CPSU-MPC</span>
+                                </span>
+                                <span class="px-4 items-left justify-left max-sm:text-[14px] text-left font-semibold">CPSU 2025 AQUINTANCE PARTY, a warm celebration for the new student’s in CPSU - MPC 2025</span>
+                                <span class="p-2 py-4 px-4 text-center text-[14px] max-sm:text-[12px] leading-loose">Giving the new student’s there memorable experienced in their college journey, many activities and games that officers had set up just for them. About 400 new students in different courses have enjoyed in this program a lifetime memories that they will cherished.</span>
+                                <button class="w-full items-end justiy-end text-end p-2 px-10">
+                                    <a class="p-3 bg-[#D9D9D9] text-[12px]" href="#">Read more</a>
+                                </button>
+                            </div>
+                            <div class="w-full h-[545px] flex flex-col  items-center text-center shadow-[0px_10px_20px_rgba(0,0,0,0.5)] rounded-[1px]">
+                                <img src="assets/images/coted.webp" alt="post-image" class="w-full h-[200px] object-cover object-center">
+                                <span class="w-full flex items-start gap-3 px-4 p-2 text-[14px] text-[#685F5F] max-sm:text-[10px]">
+                                    <i class="bi bi-calendar-fill text-[12px] max-sm:text-[10px]"></i>
+                                    <span>July 25,2025</span>
+                                    <i class="bi bi-person-fill text-[15px] max-sm:text-[10px]"></i>
+                                    <span>Published by CPSU-MPC</span>
+                                </span>
+                                <span class="px-4 items-left justify-left max-sm:text-[14px] text-left font-semibold">CPSU 2025 AQUINTANCE PARTY, a warm celebration for the new student’s in CPSU - MPC 2025</span>
+                                <span class="p-2 py-4 px-4 text-center text-[14px] max-sm:text-[12px] leading-loose">Giving the new student’s there memorable experienced in their college journey, many activities and games that officers had set up just for them. About 400 new students in different courses have enjoyed in this program a lifetime memories that they will cherished.</span>
+                                <button class="w-full items-end justiy-end text-end p-2 px-10">
+                                    <a class="p-3 bg-[#D9D9D9] text-[12px]" href="#">Read more</a>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="text-[#000000] w-[400px] h-auto flex flex-col justify-center items-center text-center gap-10">
+                            <div class="w-full h-[545px] flex flex-col  items-center text-center shadow-[0px_10px_20px_rgba(0,0,0,0.5)] rounded-[1px]">
+                                <img src="assets/images/bsabbg.jpg" alt="post-image" class="w-full h-[200px] object-cover object-center">
+                                <span class="w-full flex items-start gap-3 px-4 p-2 text-[14px] text-[#685F5F] max-sm:text-[10px]">
+                                    <i class="bi bi-calendar-fill text-[12px] max-sm:text-[10px]"></i>
+                                    <span>July 25,2025</span>
+                                    <i class="bi bi-person-fill text-[15px] max-sm:text-[10px]"></i>
+                                    <span>Published by CPSU-MPC</span>
+                                </span>
+                                <span class="px-4 items-left justify-left max-sm:text-[14px] text-left font-semibold">CPSU 2025 AQUINTANCE PARTY, a warm celebration for the new student’s in CPSU - MPC 2025</span>
+                                <span class="p-2 py-4 px-4 text-center text-[14px] max-sm:text-[12px] leading-loose">Giving the new student’s there memorable experienced in their college journey, many activities and games that officers had set up just for them. About 400 new students in different courses have enjoyed in this program a lifetime memories that they will cherished.</span>
+                                <button class="w-full items-end justiy-end text-end p-2 px-10">
+                                    <a class="p-3 bg-[#D9D9D9] text-[12px]" href="#">Read more</a>
+                                </button>
+                            </div>
+                            <div class="w-full h-[545px] flex flex-col  items-center text-center shadow-[0px_10px_20px_rgba(0,0,0,0.5)] rounded-[1px]">
+                                <img src="assets/images/coted.webp" alt="post-image" class="w-full h-[200px] object-cover object-center">
+                                <span class="w-full flex items-start gap-3 px-4 p-2 text-[14px] text-[#685F5F] max-sm:text-[10px]">
+                                    <i class="bi bi-calendar-fill text-[12px] max-sm:text-[10px]"></i>
+                                    <span>July 25,2025</span>
+                                    <i class="bi bi-person-fill text-[15px] max-sm:text-[10px]"></i>
+                                    <span>Published by CPSU-MPC</span>
+                                </span>
+                                <span class="px-4 items-left justify-left max-sm:text-[14px] text-left font-semibold">CPSU 2025 AQUINTANCE PARTY, a warm celebration for the new student’s in CPSU - MPC 2025</span>
+                                <span class="p-2 py-4 px-4 text-center text-[14px] max-sm:text-[12px] leading-loose">Giving the new student’s there memorable experienced in their college journey, many activities and games that officers had set up just for them. About 400 new students in different courses have enjoyed in this program a lifetime memories that they will cherished.</span>
+                                <button class="w-full items-end justiy-end text-end p-2 px-10">
+                                    <a class="p-3 bg-[#D9D9D9] text-[12px]" href="#">Read more</a>
+                                </button>
+                            </div>
+                           <div class="w-full h-[545px] flex flex-col  items-center text-center shadow-[0px_10px_20px_rgba(0,0,0,0.5)] rounded-[1px]">
+                                <img src="assets/images/cssbg.jpg" alt="post-image" class="w-full h-[200px] object-cover object-center">
+                                <span class="w-full flex items-start gap-3 px-4 p-2 text-[14px] text-[#685F5F] max-sm:text-[10px]">
+                                    <i class="bi bi-calendar-fill text-[12px] max-sm:text-[10px]"></i>
+                                    <span>July 25,2025</span>
+                                    <i class="bi bi-person-fill text-[15px] max-sm:text-[10px]"></i>
+                                    <span>Published by CPSU-MPC</span>
+                                </span>
+                                <span class="px-4 items-left justify-left max-sm:text-[14px] text-left font-semibold">CPSU 2025 AQUINTANCE PARTY, a warm celebration for the new student’s in CPSU - MPC 2025</span>
+                                <span class="p-2 py-4 px-4 text-center text-[14px] max-sm:text-[12px] leading-loose">Giving the new student’s there memorable experienced in their college journey, many activities and games that officers had set up just for them. About 400 new students in different courses have enjoyed in this program a lifetime memories that they will cherished.</span>
+                                <button class="w-full items-end justiy-end text-end p-2 px-10">
+                                    <a class="p-3 bg-[#D9D9D9] text-[12px]" href="#">Read more</a>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="sticky top-0 text-[#000000] w-[400px] h-full flex flex-col text-center gap-9 pl-5 max-md:pl-0">
+                            <div class="w-full h-auto flex flex-col  items-center text-center rounded-[1px] pt-10 text-[#808080]">
+                                <span class=" w-full flex flex-col justify-start items-start text-left p-1 gap-4">
+                                    <span class="w-full flex justify-start font-semibold text-[17px] tracking-wide">SEARCH</span>
+                                    <span class="w-full h-auto flex items-center">
+                                        <input class="outline-none bg-gray-200 w-full items-center placeholder:pl-4 p-3" type="text" placeholder="Search here">
+                                        <i class="bi bi-search p-3 px-6 text-[#fafafa] bg-[#16471C]"></i>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="w-full h-auto flex flex-col items-center text-center rounded-[2px] text-[#000000] border border-gray-200 gap-2">
+                                <div class="w-full h-auto flex items-center jusitify-center gap-2 py-5 px-5 border-b border-b-gray-200">
+                                    <img src="assets/icons/CPSU_logo.png" alt="cpsu_logo" class="w-[91px] h-[91px] object-contain object-center">
+                                    <span class="text-[15px] text-left font-semibold text-[#565656] border-l-4 pl-5 border-[#1F5627]">CENTRAL PHILIPPINES STATE UNIVERSITY - MOISES PADILLA CAMPUS</span>
+                                </div>
+                                    <div class="w-full h-auto flex flex-col items-center text-center rounded-[2px] text-[#000000] px-5 pb-5">
+                                        <span class="text-[24px] font-semibold text-[#565656] p-2 pt-5 w-full items-left text-left tracking-wide">QUICK LINKS</span>
+                                        <div class="w-full h-auto flex flex-col items-left justify-left text-left px-4 pt-3">
+                                            <a href="#" class="flex p-1 gap-2 text-[#565656] text-[14px] items-center font-semibold border-b border-b-gray-200 hover:translate-x-[-10px] transition-all duration-300 ease-in-out">
+                                                <i class="bi bi-mortarboard-fill text-[#24552A]"></i>
+                                                <span>Courses Offered</span>
+                                            </a>
+                                            <a href="#" class="flex p-1 gap-2 text-[#565656] text-[14px] items-center font-semibold border-b border-b-gray-200 hover:translate-x-[-10px] transition-all duration-300 ease-in-out">
+                                                <i class="bi bi-cpu text-[#24552A]"></i>
+                                                <span>Technology and Innovation</span>
+                                            </a>
+                                            <a href="#" class="flex p-1 gap-2 text-[#565656] text-[14px] items-center font-semibold border-b border-b-gray-200 hover:translate-x-[-10px] transition-all duration-300 ease-in-out">
+                                                <i class="bi bi-journal-bookmark-fill text-[#24552A]"></i>
+                                                <span>Campus Library</span>
+                                            </a>
+                                            <a href="#" class="flex p-1 gap-2 text-[#565656] text-[14px] items-center font-semibold border-b border-b-gray-200 hover:translate-x-[-10px] transition-all duration-300 ease-in-out">
+                                                <i class="bi bi-send-fill text-[#24552A]"></i>
+                                                <span>Webmail Access</span>
+                                            </a>
+                                        </div>
+                                        <span class="text-[18px] font-semibold text-[#565656] p-2 pt-5 w-full items-left text-left tracking-wide">OUR GALLARY</span>
+                                        <div class="w-full h-auto flex flex-wrap items-center justify-center text-center gap-2 p-2 py-5 px-1 pointer">
+                                            <a href="#">
+                                                <img src="assets/images/bsabbg.jpg" alt="gallery_image" class="w-[100px] h-[100px] object-cover object-center rounded-[2px]">
+                                            </a>
+                                            <a href="#">
+                                                <img src="assets/images/cssbg.jpg" alt="gallery_image" class="w-[100px] h-[100px] object-cover object-center rounded-[2px]">
+                                            </a>
+                                            <a href="#">
+                                                <img src="assets/images/coted.webp" alt="gallery_image" class="w-[100px] h-[100px] object-cover object-center rounded-[2px]">
+                                            </a>
+                                            <a href="#">
+                                                <img src="assets/images/bsabbg.jpg" alt="gallery_image" class="w-[100px] h-[100px] object-cover object-center rounded-[2px]">
+                                            </a>
+                                            <a href="#">
+                                                <img src="assets/images/coted.webp" alt="gallery_image" class="w-[100px] h-[100px] object-cover object-center rounded-[2px]">
+                                            </a>
+                                            <a href="#">
+                                                <img src="assets/images/bsabbg.jpg" alt="gallery_image" class="w-[100px] h-[100px] object-cover object-center rounded-[2px]">
+                                            </a>
+                                        </div>
+                                        <a href="./gallary.php" class="p-2 px-3 rounded-[3px] text-[13px] text-gray-200 font-semibold bg-[#24552A]">
+                                            <span>See more</span>
+                                        </a>
+                                    </div>
+                            </div>
+                        </div>      
+                    </div>
+                        <div class="w-full h-auto flex items-center justify-center text-center py-5 gap-1 text-[#A39F9F]">
+                            <button class="p-3 px-4 bg-[#EBEBEB] text-[15px] font-semibold flex items-center justify-center rounded-[5px]">
+                                <i class="bi bi-chevron-left"></i>
+                            </button>
+                            <button class="bg-green-900 text-white max-md:hidden p-3 px-4 bg-[#EBEBEB] text-[15px] font-semibold flex items-center justify-center rounded-[5px]">
+                                1
+                            </button>
+                            <button class="hover:bg-green-900 hover:text-white max-md:hidden p-3 px-4 bg-[#EBEBEB] text-[15px] flex font-semibold items-center justify-center rounded-[5px]">
+                                2
+                            </button>
+                            <button class="hover:bg-green-900 hover:text-white max-md:hidden p-3 px-4 bg-[#EBEBEB] text-[15px] flex font-semibold items-center justify-center rounded-[5px]">
+                                3
+                            </button>
+                            <button class="hover:bg-green-900 hover:text-white max-md:hidden p-3 px-4 bg-[#EBEBEB] text-[15px] flex font-semibold items-center justify-center rounded-[5px]">
+                                4
+                            </button>
+                            <button class="hover:bg-green-900 hover:text-white max-md:hidden p-3 px-4 bg-[#EBEBEB] text-[15px] flex font-semibold items-center justify-center rounded-[5px]">
+                                5
+                            </button>
+                            <button class="hover:bg-green-900 hover:text-white max-md:hidden p-3 px-4 bg-[#EBEBEB] text-[15px] flex font-semibold items-center justify-center rounded-[5px]">
+                                6
+                            </button>
+                            <button class="hover:bg-green-900 hover:text-white max-md:hidden p-3 px-4 bg-[#EBEBEB] text-[15px] flex font-semibold items-center justify-center rounded-[5px]">
+                                7
+                            </button>
+                            <button class="hover:bg-green-900 hover:text-white max-md:hidden p-3 px-4 bg-[#EBEBEB] text-[15px] flex font-semibold items-center justify-center rounded-[5px]">
+                                8
+                            </button>
+                            <button class="hover:bg-green-900 hover:text-white max-md:hidden p-3 px-4 bg-[#EBEBEB] text-[15px] flex font-semibold items-center justify-center rounded-[5px]">
+                                9
+                            </button>
+                            <button class="hover:bg-green-900 hover:text-white max-md:hidden p-3 px-4 bg-[#EBEBEB] text-[15px] flex font-semibold items-center justify-center rounded-[5px]">
+                                10
+                            </button>
+                            <button class="hover:bg-green-900 hover:text-white max-md:hidden p-3 px-4 bg-[#EBEBEB] text-[15px] flex font-semibold items-center justify-center rounded-[5px]">
+                                ...
+                            </button>
+                            <button class="p-3 px-4 bg-[#EBEBEB] text-[15px] flex font-semibold items-center justify-center rounded-[5px]">
+                                <i class="bi bi-chevron-right"></i> 
+                            </button>
+                        </div>
+                </div>
+
+                <div class="relative w-full h-auto flex relative flex-wrap items-center justify-evenly text-center p-5 bg-top bg-cover" style="background-image: url(assets/images/cssbg.jpg);">
+                        <div class="absolute inset-0 bg-[#183517] bg-opacity-75"></div>
+
+                        <span class="z-1 text-[#2EC357] z-10 flex flex-col p-5">
+                            <span class="text-[64px] font-bold">
+                                <span class="counter" data-target="3">0</span>
+                            </span>
+                            <span class="text-[20px] font-bold">PROGRAM OFFERED</span>
+                        </span>
+
+                        <span class="z-1 text-[#2EC357] z-10 flex flex-col p-5">
+                            <span class="text-[64px] font-bold">
+                                <span class="counter" data-target="1500">0</span>+
+                            </span>
+                            <span class="text-[20px] font-bold">TOTAL OF STUDENTS</span>
+                        </span>
+
+                        <span class="text-[#2EC357] z-10 flex flex-col p-5">
+                            <span class="text-[64px] font-bold">
+                                <span class="counter" data-target="120">0</span>+
+                            </span>
+                            <span class="text-[20px] font-bold">ACHIEVEMENTS</span>
+                        </span>
+
+                        <span class="text-[#2EC357] z-10 flex flex-col p-5">
+                            <span class="text-[64px] font-bold">
+                                #<span class="counter" data-target="5">0</span>
+                            </span>
+                            <span class="text-[20px] font-bold">RANKING</span>
+                        </span>
+                </div>
+
+                <div class="w-full relative h-auto flex flex-col justify-center items-center text-center bg-[#FAFAFA] p-3 gap-4 pt-10 pb-10 bg-cover bg-no-repeat" style="background: url(assets/images/cpsu-moises-padilla.jpg);">
+                    <div class="absolute inset-0 bg-white opacity-90"></div>
+                   <span class="z-10 flex items-center justify-center text-center gap-2 p-2 pt-5">
+                        <img src="assets/images/leaves_one.png" alt="leaves_one" class="w-[88px] h-[75px] max-sm:w-[60px] h-[40px]">
+                        <span class="border-b-4 border-b-[#656363] flex flex-col items-center justify-center text-center pb-2 max-sm:px-1 px-5 leading-none">
+                            <img src="assets/images/crown.png" alt="crown" class="w-[135px] h-[90] object-cover">
+                            <span class="text-[32px] max-md:text-[25px] text-[#656363] font-medium tracking-widest">HIGHLIGHTS</span>
+                        </span>
+                        <img src="assets/images/leaves.png" alt="leaves_two" class="w-[88px] h-[75px] max-sm:w-[60px] h-[40px]">
+                    </span>
+                    <div class="z-10 w-full h-auto flex flex-wrap justify-center items-center text-center gap-2 p-1">
+                        <span class="w-[600px] h-[553px] max-sm:h-[300px] flex">
+                            <img src="assets/images/cssbg.jpg" alt="image_one" class="w-full h-full object-cover object-center rounded-[4px]">
+                        </span>
+                        <div class="w-[600px] h-[553px] max-sm:h-[300px] flex flex-col justify-center items-center gap-1">
+                                <div class="flex w-full h-1/2 gap-1">
+                                    <div class="w-1/2 h-auto flex">
+                                        <img src="assets/images/cssbg.jpg" alt="image_one" class="w-full h-full object-center object-cover rounded-[5px]">
+                                    </div>
+                                    <div class="w-1/2 h-auto flex">
+                                        <img src="assets/images/cssbg.jpg" alt="image_one" class="w-full h-full object-center object-cover rounded-[5px]">
+                                    </div>
+                                </div>
+                                <div class="flex w-full h-1/2 gap-1">
+                                    <div class="w-1/2 h-auto bg-blue-500 flex">
+                                        <img src="assets/images/cssbg.jpg" alt="image_one" class="w-full h-full object-center object-cover rounded-[5px]">
+                                    </div>
+                                    <div class="w-1/2 h-auto bg-blue-500 flex">
+                                        <img src="assets/images/cssbg.jpg" alt="image_one" class="w-full h-full object-center object-cover rounded-[5px]">
+                                    </div>
+                                </div>
+                        </div>
+                            <div class="w-full h-auto flex justify-center items-center text-center p-2">
+                                <span class="w-[60%] max-sm:w-full max-sm:text-justify text-[16px] text-[#524C4C]">The College of Computer Studies (CCS) at CPSU Moises Padilla offers innovative and industry-relevant programs that prepare students for careers in IT and computing. With hands-on training in programming, web development, networking, and system analysis, CCS equips future professionals with the technical skills and critical thinking needed in today’s digital world.</span>
+                            </div>
+                    </div>
+
+                        <div class="z-10 w-full h-auto flex justify-center bg-transparent">
+                            <div class="w-[1200px] overflow-hidden py-10 relative bg-transparent">
+                                <div class="flex animate-scroll gap-20">
+                                    <img src="assets/images/cssbg.jpg" class="h-[250px] w-[350px] object-cover flex-shrink-0 rounded-[12px]" alt="ched">
+                                    <img src="assets/images/cssbg.jpg" class="h-[250px] w-[350px] object-cover flex-shrink-0 rounded-[12px]" alt="ched">
+                                    <img src="assets/images/cssbg.jpg" class="h-[250px] w-[350px] object-cover flex-shrink-0 rounded-[12px]" alt="ched">
+                                    <img src="assets/images/cssbg.jpg" class="h-[250px] w-[350px] object-cover flex-shrink-0 rounded-[12px]" alt="ched">
+                                    <img src="assets/images/cssbg.jpg" class="h-[250px] w-[350px] object-cover flex-shrink-0 rounded-[12px]" alt="ched">
+                                    <img src="assets/images/cssbg.jpg" class="h-[250px] w-[350px] object-cover flex-shrink-0 rounded-[12px]" alt="ched">
+                                    <img src="assets/images/cssbg.jpg" class="h-[250px] w-[350px] object-cover flex-shrink-0 rounded-[12px]" alt="ched">
+                                    <img src="assets/images/cssbg.jpg" class="h-[250px] w-[350px] object-cover flex-shrink-0 rounded-[12px]" alt="ched">
+                                    
+                                    <img src="assets/images/cssbg.jpg" class="h-[250px] w-[350px] object-cover flex-shrink-0 rounded-[12px]" alt="ched">
+                                    <img src="assets/images/cssbg.jpg" class="h-[250px] w-[350px] object-cover flex-shrink-0 rounded-[12px]" alt="ched">
+                                    <img src="assets/images/cssbg.jpg" class="h-[250px] w-[350px] object-cover flex-shrink-0 rounded-[12px]" alt="ched">
+                                    <img src="assets/images/cssbg.jpg" class="h-[250px] w-[350px] object-cover flex-shrink-0 rounded-[12px]" alt="ched">
+                                    <img src="assets/images/cssbg.jpg" class="h-[250px] w-[350px] object-cover flex-shrink-0 rounded-[12px]" alt="ched">
+                                    <img src="assets/images/cssbg.jpg" class="h-[250px] w-[350px] object-cover flex-shrink-0 rounded-[12px]" alt="ched">
+                                    <img src="assets/images/cssbg.jpg" class="h-[250px] w-[350px] object-cover flex-shrink-0 rounded-[12px]" alt="ched">
+                                    <img src="assets/images/cssbg.jpg" class="h-[250px] w-[350px] object-cover flex-shrink-0 rounded-[12px]" alt="ched">
+                                </div>
+                            </div>
+                        </div>
+
+                            <div class="z-10 w-full h-auto flex flex-wrap justify-center items-center text-center gap-2 py-5">
+                                <span class="w-[590px] h-[302px] max-sm:h-[300px] flex">
+                                    <img src="assets/images/cssbg.jpg" alt="image_one" class="w-full h-full object-cover object-center rounded-[4px]">
+                                </span>
+                                <span class="w-[590px] h-auto  flex flex-col p-1 gap-2">
+                                    <span class="text-left px-5 max-sm:px-1 text-[25px] max-sm:text-[18px] tracking-wide font-semibold text-[#5A5C5B]">
+                                        <span class="text-[#2D7E44]">CENTRAL PHILIPPINES UNIVERSITY</span>  MOISES PADILLA CAMPUS ADMIN BUILDING 
+                                    </span>
+                                    <span class="text-[#5A5C5B] text-[16px] text-left max-sm:px-1 px-5 max-sm:text-[14px]">The College of Computer Studies (CCS) at CPSU Moises Padilla offers innovative and industry-relevant programs that prepare students for careers in IT and computing. With hands-on training in programming, web development, networking, and system analysis, CCS equips future professionals with the technical skills and critical thinking needed in today’s digital world.</span>
+                                </span>
+                            </div>
+
+                                    <div class="z-10 w-full h-auto flex flex-wrap justify-center items-center text-center gap-2 py-5">
+                                        <span class="w-[590px] h-auto max-sm:h-auto flex flex-col p-1 gap-2">
+                                            <span class="text-left px-5 max-sm:px-1 text-[25px] max-sm:text-[18px] tracking-wide font-semibold text-[#5A5C5B]">
+                                                <span class="text-[#2D7E44]">CENTRAL PHILIPPINES UNIVERSITY</span>  MOISES PADILLA CAMPUS REGISTRAR OFFICE
+                                            </span>
+                                            <span class="text-[#5A5C5B] text-[16px] text-left max-sm:px-1 px-5 max-sm:text-[14px]">The College of Computer Studies (CCS) at CPSU Moises Padilla offers innovative and industry-relevant programs that prepare students for careers in IT and computing. With hands-on training in programming, web development, networking, and system analysis, CCS equips future professionals with the technical skills and critical thinking needed in today’s digital world.</span>
+                                        </span>
+                                        <span class="w-[590px] h-[302px] max-sm:h-[300px] flex">
+                                           <img src="assets/images/cssbg.jpg" alt="image_one" class="w-full h-full object-cover object-center rounded-[4px]">
+                                        </span>
+                                    </div>
+
+                                    <div class="z-10 w-full h-auto flex flex-wrap justify-center items-center text-center gap-2 py-5">
+                                        <span class="w-[590px] h-[302px] max-sm:h-[300px] flex">
+                                           <img src="assets/images/cssbg.jpg" alt="image_one" class="w-full h-full object-cover object-center rounded-[4px]">
+                                        </span>
+                                        <span class="w-[590px] h-auto flex flex-col p-1 gap-2">
+                                            <span class="text-left px-5 max-sm:px-1 text-[25px] max-sm:text-[18px] tracking-wide font-semibold text-[#5A5C5B]">
+                                                <span class="text-[#2D7E44]">CENTRAL PHILIPPINES UNIVERSITY</span>  MOISES PADILLA CAMPUS LIBRARY 
+                                            </span>
+                                            <span class="text-[#5A5C5B] text-[16px] text-left max-sm:px-1 px-5 max-sm:text-[14px]">The College of Computer Studies (CCS) at CPSU Moises Padilla offers innovative and industry-relevant programs that prepare students for careers in IT and computing. With hands-on training in programming, web development, networking, and system analysis, CCS equips future professionals with the technical skills and critical thinking needed in today’s digital world.</span>
+                                        </span>
+                                    </div>
+
+                                    <div class="z-10 w-full h-auto flex flex-wrap justify-center items-center text-center gap-2 py-5">
+                                        <span class="w-[590px] h-auto max-sm:h-auto flex flex-col p-1 gap-2">
+                                            <span class="text-left px-5 max-sm:px-1 text-[25px] max-sm:text-[18px] tracking-wide font-semibold text-[#5A5C5B]">
+                                                <span class="text-[#2D7E44]">CENTRAL PHILIPPINES UNIVERSITY</span>  MOISES PADILLA CAMPUS REGISTRAR OFFICE
+                                            </span>
+                                            <span class="text-[#5A5C5B] text-[16px] text-left max-sm:px-1 px-5 max-sm:text-[14px]">The College of Computer Studies (CCS) at CPSU Moises Padilla offers innovative and industry-relevant programs that prepare students for careers in IT and computing. With hands-on training in programming, web development, networking, and system analysis, CCS equips future professionals with the technical skills and critical thinking needed in today’s digital world.</span>
+                                        </span>
+                                        <span class="w-[590px] h-[302px] max-sm:h-[300px] flex">
+                                           <img src="assets/images/cssbg.jpg" alt="image_one" class="w-full h-full object-cover object-center rounded-[4px]">
+                                        </span>
+                                    </div>
+
+                                    <div class="z-10 w-full h-auto flex flex-wrap justify-center items-center text-center gap-2 py-5">
+                                        <span class="w-[590px] h-[302px] max-sm:h-[300px] flex">
+                                           <img src="assets/images/cssbg.jpg" alt="image_one" class="w-full h-full object-cover object-center rounded-[4px]">
+                                        </span>
+                                        <span class="w-[590px] h-auto flex flex-col p-1 gap-2">
+                                        <span class="text-left px-5 max-sm:px-1 text-[25px] max-sm:text-[18px] tracking-wide font-semibold text-[#5A5C5B]">
+                                            <span class="text-[#2D7E44]">CENTRAL PHILIPPINES UNIVERSITY</span>  MOISES PADILLA CAMPUS SAFE CENTER OFFICE
+                                        </span>
+                                        <span class="text-[#5A5C5B] text-[16px] text-left max-sm:px-1 px-5 max-sm:text-[14px]">The College of Computer Studies (CCS) at CPSU Moises Padilla offers innovative and industry-relevant programs that prepare students for careers in IT and computing. With hands-on training in programming, web development, networking, and system analysis, CCS equips future professionals with the technical skills and critical thinking needed in today’s digital world.</span>
+                                        </span>
+                                    </div>
+
+                                    <div class="z-10 w-full h-auto flex flex-col justify-center items-center text-justify p-2 py-4 pt-10">
+                                        <span class="w-[60%] max-sm:w-full italic max-sm:text-center text-[16px] text-[#5A5C5B]">CPSU is committed to produce competent graduates who can generate and extend leading technologies under the areas of this community being able to give a high quality education and best performing students in this country. Also improving everyday and leading the ennovation and give results to showcase what cpsu organization can do.</span>
+                                    </div>
+                                    <div class="z-10 w-[60%] flex justify-end px-4 ">
+                                        <span class="text-[16px] font-semibold text-gray-500 tracking-widest italic">-President of Central Philippines State University “</span>
+                                    </div>
+                </div>
+
+
+
+
+                        <div class="w-full h-auto flex flex-col justify-center items-center text-center p-1 py-10 bg-[#FDFFFF]">
+                            <span class="w-full h-auto flex justify-evenly items-center text-center p-2 py-10">
+                                <span class="flex items-center gap-5">
+                                    <img src="assets/icons/CPSU_logo.png" alt="cpsu_logo" class="w-[100px] h-[100px] object-contain">
+                                    <span class="flex flex-col text-left leading-none tracking-widest border-l-4 border-[#104618] px-5 py-3">
+                                        <span class="text-[25px] max-sm:text-[18px] text-[#656363] font-semibold">CENTRAL PHILIPPINES STATE UNIVERSITY <br> MOISES PADILLA CAMPUS</span>
+                                        <span class="text-[16px] pt-2 font-semibold max-sm:text-[12px] text-[#656363]">MISSION, VISION, STRATEGIC GOALS, OBJECTIVES</span>
+                                    </span>
+                                </span>
+                                <span></span>
+                                <span></span>
+                            </span>
+
+                            <div class="w-full h-auto flex flex-wrap items-center justify-center gap-4 px-10 max-md:px-2">
+                                <div class="relative w-[600px] h-auto flex flex-col bg-contain bg-no-repeat bg-center rounded-[8px] pt-5 gap-8 justify-center" style="background-image: url(assets/images/CPSU_logo.png);">
+                                    <div class="absolute inset-0 bg-[linear-gradient(180deg,green,green,yellow)] opacity-95 rounded-[8px]"></div>
+                                    <span class="flex text-center justify-center text-green-900 z-10 text-[48px] font-bold tracking-wide bg-[#EBDC36]">MISSION</span>
+                                    <span class="text-[#fafafa] z-10 text-[25px] max-md:text-[18px] px-10 tracking-wide leading-[25px]">CPSU as the leading technology - driven multi-disciplinary university by 2030</span>
+                                        <div class="z-10 gap-[60px] max-md:gap-10 flex flex-col">
+                                            <span class="flex flex-col z-10 text-[20px] text-[#fafafa] tracking-wide">
+                                            <span class="flex flex-col leading-none font-semibold">
+                                                PANANAW
+                                                <span class="text-[15px] font-normal">(FILIPINO)</span>
+                                            </span>
+                                            <span class="px-10 max-md:px-5 text-[25px] text-normal max-md:text-[18px] flex leading-none">Ang CPSU bilang nangungunang unibersidad na pinapatakbo ng teknolohiya at multi-disiplina sa taong 2030</span>
+                                    </span>
+                                    <span class="flex flex-col z-10 text-[20px] text-[#fafafa] tracking-wide">
+                                            <span class="flex flex-col leading-none font-semibold">
+                                                PALANAN-AWON
+                                                <span class="text-[15px] font-normal">(HILIGAYNON)</span>
+                                            </span>
+                                            <span class="px-10 max-md:px-5 text-[25px] text-normal flex leading-none max-md:text-[18px]">CPSU bilang nagapanguna nga unibersidad nga ginatuytuyan sang teknolohiya sa tuig 2030</span>
+                                    </span>
+                                    <span class="flex flex-col z-10 text-[20px] text-[#fafafa] tracking-wide pb-10 max-sm:pb-0 max-md:pb-5">
+                                            <span class="flex flex-col leading-none font-semibold">
+                                                PANAN-AWON
+                                                <span class="text-[15px] font-normal">(CEBUANO)</span>
+                                            </span>
+                                            <span class="px-10 max-md:px-5 text-[25px] text-normal flex leading-none max-md:text-[19px]">Ang CPSU isip nanguna nga teknolohiya - gimaneho sa multi-disciplinary nga unibersidad sa 2030</span>
+                                    </span>
+                                        </div>
+                                    <span class="flex text-center justify-center p-1 text-white z-10 text-[11px] tracking-wide bg-[#3E523C] rounded-b">@2023 Central Philippines State university</span>
+                                </div>
+
+                                <div class="relative w-[600px] h-auto flex flex-col bg-contain bg-no-repeat bg-center rounded-[8px] pt-5 gap-8 justify-center" style="background-image: url(assets/images/CPSU_logo.png);">
+                                     <div class="absolute inset-0 bg-[linear-gradient(180deg,green,green,yellow)] opacity-95 rounded-[8px]"></div>
+                                    <span class="flex text-center justify-center text-green-900 z-10 text-[48px] font-bold tracking-wide bg-[#EBDC36]">MISSION</span>
+                                    <span class="text-[#fafafa] z-10 text-[25px] max-md:text-[18px] px-10 tracking-wide leading-[25px]">CPSU as the leading technology - driven multi-disciplinary university by 2030</span>
+                                        <div class="z-10 gap-[60px] max-md:gap-10 flex flex-col">
+                                            <span class="flex flex-col z-10 text-[20px] text-[#fafafa] tracking-wide">
+                                            <span class="flex flex-col leading-none font-semibold">
+                                                PANANAW
+                                                <span class="text-[15px] font-normal">(FILIPINO)</span>
+                                            </span>
+                                            <span class="px-10 max-md:px-5 text-[25px] text-normal max-md:text-[18px] flex leading-none">Ang CPSU bilang nangungunang unibersidad na pinapatakbo ng teknolohiya at multi-disiplina sa taong 2030</span>
+                                    </span>
+                                    <span class="flex flex-col z-10 text-[20px] text-[#fafafa] tracking-wide">
+                                            <span class="flex flex-col leading-none font-semibold">
+                                                PALANAN-AWON
+                                                <span class="text-[15px] font-normal">(HILIGAYNON)</span>
+                                            </span>
+                                            <span class="px-10 max-md:px-5 text-[25px] text-normal flex leading-none max-md:text-[18px]">CPSU bilang nagapanguna nga unibersidad nga ginatuytuyan sang teknolohiya sa tuig 2030</span>
+                                    </span>
+                                    <span class="flex flex-col z-10 text-[20px] text-[#fafafa] tracking-wide pb-10 max-sm:pb-0 max-md:pb-5">
+                                            <span class="flex flex-col leading-none font-semibold">
+                                                PANAN-AWON
+                                                <span class="text-[15px] font-normal">(CEBUANO)</span>
+                                            </span>
+                                            <span class="px-10 max-md:px-5 text-[25px] text-normal flex leading-none max-md:text-[19px]">Ang CPSU isip nanguna nga teknolohiya - gimaneho sa multi-disciplinary nga unibersidad sa 2030</span>
+                                    </span>
+                                        </div>
+                                    <span class="flex text-center justify-center p-1 text-white z-10 text-[11px] tracking-wide bg-[#3E523C] rounded-b">@2023 Central Philippines State university</span>
+                                </div>
+
+                                <div class="relative w-[600px] h-auto flex flex-col bg-contain bg-no-repeat bg-center rounded-[8px] pt-5 gap-8 justify-center" style="background-image: url(assets/images/CPSU_logo.png);">
+                                     <div class="absolute inset-0 bg-[linear-gradient(180deg,green,green,yellow)] opacity-95 rounded-[8px]"></div>
+                                    <span class="flex text-center justify-center text-green-900 z-10 text-[48px] font-bold tracking-wide bg-[#EBDC36]">MISSION</span>
+                                    <span class="text-[#fafafa] z-10 text-[25px] max-md:text-[18px] px-10 tracking-wide leading-[25px]">CPSU as the leading technology - driven multi-disciplinary university by 2030</span>
+                                        <div class="z-10 gap-[60px] max-md:gap-10 flex flex-col">
+                                            <span class="flex flex-col z-10 text-[20px] text-[#fafafa] tracking-wide">
+                                            <span class="flex flex-col leading-none font-semibold">
+                                                PANANAW
+                                                <span class="text-[15px] font-normal">(FILIPINO)</span>
+                                            </span>
+                                            <span class="px-10 max-md:px-5 text-[25px] text-normal max-md:text-[18px] flex leading-none">Ang CPSU bilang nangungunang unibersidad na pinapatakbo ng teknolohiya at multi-disiplina sa taong 2030</span>
+                                    </span>
+                                    <span class="flex flex-col z-10 text-[20px] text-[#fafafa] tracking-wide">
+                                            <span class="flex flex-col leading-none font-semibold">
+                                                PALANAN-AWON
+                                                <span class="text-[15px] font-normal">(HILIGAYNON)</span>
+                                            </span>
+                                            <span class="px-10 max-md:px-5 text-[25px] text-normal flex leading-none max-md:text-[18px]">CPSU bilang nagapanguna nga unibersidad nga ginatuytuyan sang teknolohiya sa tuig 2030</span>
+                                    </span>
+                                    <span class="flex flex-col z-10 text-[20px] text-[#fafafa] tracking-wide pb-10 max-sm:pb-0 max-md:pb-5">
+                                            <span class="flex flex-col leading-none font-semibold">
+                                                PANAN-AWON
+                                                <span class="text-[15px] font-normal">(CEBUANO)</span>
+                                            </span>
+                                            <span class="px-10 max-md:px-5 text-[25px] text-normal flex leading-none max-md:text-[19px]">Ang CPSU isip nanguna nga teknolohiya - gimaneho sa multi-disciplinary nga unibersidad sa 2030</span>
+                                    </span>
+                                        </div>
+                                    <span class="flex text-center justify-center p-1 text-white z-10 text-[11px] tracking-wide bg-[#3E523C] rounded-b">@2023 Central Philippines State university</span>
+                                </div>
+
+                                <div class="relative w-[600px] h-auto flex flex-col bg-contain bg-no-repeat bg-center rounded-[8px] pt-5 gap-8 justify-center" style="background-image: url(assets/images/CPSU_logo.png);">
+                                     <div class="absolute inset-0 bg-[linear-gradient(180deg,green,green,yellow)] opacity-95 rounded-[8px]"></div>
+                                    <span class="flex text-center justify-center text-green-900 z-10 text-[48px] font-bold tracking-wide bg-[#EBDC36]">MISSION</span>
+                                    <span class="text-[#fafafa] z-10 text-[25px] max-md:text-[18px] px-10 tracking-wide leading-[25px]">CPSU as the leading technology - driven multi-disciplinary university by 2030</span>
+                                        <div class="z-10 gap-[60px] max-md:gap-10 flex flex-col">
+                                            <span class="flex flex-col z-10 text-[20px] text-[#fafafa] tracking-wide">
+                                            <span class="flex flex-col leading-none font-semibold">
+                                                PANANAW
+                                                <span class="text-[15px] font-normal">(FILIPINO)</span>
+                                            </span>
+                                            <span class="px-10 max-md:px-5 text-[25px] text-normal max-md:text-[18px] flex leading-none">Ang CPSU bilang nangungunang unibersidad na pinapatakbo ng teknolohiya at multi-disiplina sa taong 2030</span>
+                                    </span>
+                                    <span class="flex flex-col z-10 text-[20px] text-[#fafafa] tracking-wide">
+                                            <span class="flex flex-col leading-none font-semibold">
+                                                PALANAN-AWON
+                                                <span class="text-[15px] font-normal">(HILIGAYNON)</span>
+                                            </span>
+                                            <span class="px-10 max-md:px-5 text-[25px] text-normal flex leading-none max-md:text-[18px]">CPSU bilang nagapanguna nga unibersidad nga ginatuytuyan sang teknolohiya sa tuig 2030</span>
+                                    </span>
+                                    <span class="flex flex-col z-10 text-[20px] text-[#fafafa] tracking-wide pb-10 max-sm:pb-0 max-md:pb-5">
+                                            <span class="flex flex-col leading-none font-semibold">
+                                                PANAN-AWON
+                                                <span class="text-[15px] font-normal">(CEBUANO)</span>
+                                            </span>
+                                            <span class="px-10 max-md:px-5 text-[25px] text-normal flex leading-none max-md:text-[19px]">Ang CPSU isip nanguna nga teknolohiya - gimaneho sa multi-disciplinary nga unibersidad sa 2030</span>
+                                    </span>
+                                        </div>
+                                    <span class="flex text-center justify-center p-1 text-white z-10 text-[11px] tracking-wide bg-[#3E523C] rounded-b">@2023 Central Philippines State university</span>
+                                </div>
+                            </div>
+                                    <div class="w-[80%] h-auto flex justify-center text-[#4F4E4E] items-center text-center max-sm:w-full p-5">
+                                       <span class="max-md:text-[12px]">
+                                         <span class="font-bold">Central Philippines State University (CPSU)</span> envisions becoming a center of excellence attuned to global diversity by producing responsive and skilled graduates. Its mission focuses on delivering quality instruction, research, extension, and production programs that empower communities and promote sustainable development. To achieve this, CPSU pursues strategic goals such as enhancing academic quality, fostering research and innovation, strengthening community engagement, promoting environmental sustainability, and advancing digital transformation. The university’s objectives include providing inclusive education, expanding lifelong learning, supporting economic access for underserved students, boosting research productivity, and cultivating leadership across disciplines.
+                                       </span>
+                                    </div>
+                        </div>
+
+                            <div class="w-full relative h-auto flex justify-center items-center p-1 p-5 py-10 bg-contain bg-no-repeat" style="background: url(assets/images/cpsu-moises-padilla.jpg);">
+                                <div class="absolute inset-0 bg-white opacity-90"></div>
+                                <div class="w-[500px] h-[600px] max-md:h-[400px] z-1" id="map">
+                                </div>
+                            </div>
+
+                            <div class="w-full h-auto flex flex-col justify-center items-center text-left pt-5 bg-green-900">
+                               <div class="relative w-full h-auto flex flex-wrap justify-center text-center gap-20 max-md:gap-10 max-sm:px-10 pt-10 bg-top bg-cover" style="background-image: url(assets/images/cssbg.jpg);">
+                                    <div class="absolute inset-0 bg-green-900"></div>
+                                    <div class="flex z-10 w-[400px] h-auto items-left flex flex-col p-1 gap-4">
+                                       <span class="flex items-left text-white justify-left text-center gap-2">
+                                            <img src="./assets/icons/CPSU_logo.png" alt="CPSU Logo" class="w-[50pxpx] h-[49.73px]">
+                                            <span class="flex flex-col items-start max-md:items-center justify-center text-left pl-3 border-l border-l-gray-300">
+                                                <span class="text-[12px] font-semibold tracking-widest">CENTRAL PHILIPPINES STATE UNIVERSITY</span>
+                                                <span class="text-[10px] font-semibold tracking-widest w-full flex text-left">MOISES PADILLA CAMPUS</span>
+                                            </span>
+                                        </span>
+                                        <span class="flex flex-col text-left text-white text-[14px]">
+                                           <span class="text-[18px] font-bold py-2">Central Philippines State University (CPSU)</span>
+                                           is a catalyst for change in Negros Occidental empowering communities 
+                                           through innovation, education, and agriculture. With 10 ISO-accredited campuses,
+                                            CPSU transforms local potential into lasting impact. 
+                                        </span>
+                                        <span class="flex gap-3 pt-2 items-center">
+                                           <a href="#"><span class="bg-white px-4 py-[4px] rounded-full text-[23px] font-semibold text-gray-500">f</span> </a>
+                                           <a href="#"><span class="bg-white px-3 py-[9px] rounded-full"><i class="bi bi-youtube text-gray-500 text-[18px]"></i></span></a>
+                                           <a href="#"><span class="bg-white px-3 py-[9px] rounded-full"><i class="bi bi-google text-gray-500 text-[18px]"></i></span></a>
+                                           <a href="#"><span class="text-gray-500 text-[18px] bg-white px-3 py-[7px] rounded-full"><i class="bi bi-instagram"></i></span></a>
+                                        </span>
+                                    </div>
+
+                                    <div class="flex z-10 max-md:w-[400px] h-auto items-left text-left flex flex-col p-1 gap-4">
+                                        <span class="text-[20px] font-bold text-white">Support</span>
+                                        <span class="flex flex-col p-3 gap-3 text-white">
+                                            <a href="#" class="hover:text-green-500"><span>Privacy</span></a>
+                                            <a href="#" class="hover:text-green-500"><span>Policy</span></a>
+                                            <a href="#" class="hover:text-green-500"><span>Support</span></a>
+                                        </span>
+                                    </div>
+
+                                    <div class="flex z-10 max-md:w-[400px] h-auto items-left text-left flex flex-col p-1 gap-4">
+                                        <span class="text-[20px] font-bold text-white">Contact us</span>
+                                        <span class="flex flex-col p-3 gap-3 items-left text-white">
+                                            <span class="text-[17px]">Central Philippines State University, <br> Moises Padilla, Negros Occidental</span>
+                                            <span>+6399-3117-4271</span>
+                                            <span>cpsu_mpc@cpsu.edu.ph</span>
+                                        </span>
+                                    </div>
+                               </div>
+                               
+                               <div class="w-full h-auto flex max-md:flex-col text-white p-4 justify-center items-center bg-green-900 gap-3 pt-10 p-1">
+                                    <span class="flex border-r border-white px-3 gap-2 text-[17px]">
+                                        <span>Online Visitors:</span>
+                                        <span class="font-bold">205</span>
+                                    </span>
+                                    <span class="flex border-r border-white px-5 gap-2 text-[17px]">
+                                        <span>Today's Visitors:</span>
+                                        <span class="font-bold">13</span>
+                                    </span>
+                                    <span class="flex px-3 gap-2 text-[17px]">
+                                        <span>Total Page Views:</span>
+                                        <span class="font-bold">4,507</span>
+                                    </span>
+                               </div>
+
+                               <a href="#hm" class="w-full flex justify-end px-10 pb-5">
+                                    <span><i class="bi bi-chevron-up text-white text-[20px] font-bold"></i></span>
+                               </a>
+                            </div>
+
+                                            <!-- <div class="w-full h-auto flex justify-center items-center text-center p-5 max-md:text-[10px] text-[16px] text-[#ADADAD] bg-[#1A1A1A]">
+                                                <span>@2023 Central Philippines State University - Moises Padilla Campus || Maintained by Management Information System Office (MISO).</span>
+                                            </div> -->
+
+    <script>
+        function toggleMenu() {
+            const menutwo = document.querySelector('.menu');
+            menutwo.classList.toggle('active');
+        }
+
+        window.addEventListener('click', (e) => {
+            if (!document.querySelector('.hamburger').contains(e.target) && !document.querySelector('.menu').contains(e.target)) {
+                document.querySelector('.menu').classList.remove('active');
+            }
+        })
+
+        const button = document.getElementById('dropdownButton');
+        const menu = document.getElementById('dropdownMenu');
+
+        button.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+        });
+
+        window.addEventListener('click', (e) => {
+        if (!button.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.add('hidden');
+        }
+        });
+        const dropdownBtn = document.getElementById('dropdownButtontwo');
+        const dropdownMenu = document.getElementById('dropdownMenutwo');
+
+        dropdownBtn.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('hidden');
+        });
+
+        window.addEventListener('click', (e) => {
+        if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.add('hidden');
+        }
+        });
+        const map = L.map('map').setView([10.2774, 123.06656], 16);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        L.marker([10.2774, 123.06656]).addTo(map)
+        .bindPopup('CPSU Moises Padilla Campus')
+        .openPopup();
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+        const counters = document.querySelectorAll(".counter");
+
+        const animateCount = (counter) => {
+        const target = +counter.getAttribute("data-target");
+        const duration = 2000;
+        const step = target / (duration / 16);
+
+        let count = 0;
+
+        const update = () => {
+            count += step;
+            if (count < target) {
+                counter.textContent = Math.floor(count);
+                requestAnimationFrame(update);
+            } else {
+                counter.textContent = target.toLocaleString(); 
+            }
+        };
+
+            update();
+        };
+
+        const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCount(entry.target);
+                obs.unobserve(entry.target);
+            }
+        });
+        }, { threshold: 0.5 });
+
+            counters.forEach(counter => {
+                observer.observe(counter);
+            });
+        });
+    </script>
+</body>
+</html>
