@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPSU Moises Padilla Official Website</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="/assets/icons/CPSU_logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        .hamburger {
+            cursor: pointer;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #fafafa;
+            margin: 2px;
+            transition: 0.4s;
+            cursor: pointer;
+        }
+        .menu {
+                position: fixed;
+                transform: translateX(-500%);
+                transition: transform 1.5s ease-in-out;
+                z-index: 999;
+            }
+        .menu.active {
+                transform: translateX(0);
+            }
+         .hamburger {
+                display: flex;
+            }
+        .box-shodow {
+            box-shadow: 0px 4px 6px rgb(0, 0, 0, 0.9);
+        }
+        .shadow-white {
+            box-shadow: 0px 4px 6px rgb(255, 255, 255, 0.9);
+        }
+    </style>
+</head>
+<body class="font-poppins bg-[#000000]">
+            <div class="w-full h-auto sticky top-0 z-50 shadow-[0px_10px_20px_rgba(0,0,0,0.5)]">
+        <div id="header" class=" w-full h-auto flex justify-evenly items-center bg-[#000000] text-[#FCFCFC] text-[11px] p-3 gap-[200px] max-md:gap-10 max-md:justify-between">
+        <span class="w-auto flex items-center gap-5 max-md:gap-3 text-[13px] font-semibold">
+            <a href="#" class="outline-none flex items-center justify-center text-center gap-2 pointer max-md:pr-3 pr-5 border-r border-r-[#FCFCFC]">
+                <span class="font-bold text-[13px]">f</span>
+                <span class="max-md:hidden">CPSU-MPC Web Admin</span>
+            </a>
+            <a href="#" class="outline-none flex items-center justify-center text-center gap-2 pointer max-md:pr-3 pr-5 border-r border-r-[#FCFCFC]">
+                <i class="bi bi-envelope"></i>
+                <span class="max-md:hidden">cpsu_mpc@cpsu.edu.ph</span>
+            </a>
+            <a href="#" class="outline-none flex items-center justify-center text-center gap-2 pointer max-md:pr-3">
+                <i class="bi bi-telephone"></i>
+                <span class="max-md:hidden">+6399-3117-4271</span>
+            </a>
+        </span>
+        <a href="../admin/index.php" target="blank" class="outline-none flex items-center justify-center text-center gap-2 pointer pl-5 max-md:pl-3 border-l pointer border-l-[#FCFCFC] text-[13px] font-semibold">
+            <i class="bi bi-wifi"></i>
+            <span class="mx-md:hidden">Cpsu Web Admin</span>
+        </a>
+    </div>
+
+        <div class="w-full h-auto flex justify-evenly items-center text-center bg-[#104618] text-[#fafafa] p-2 gap-10">
+            <span class="flex items-center justify-center text-center gap-2">
+                <img src="/assets/icons/CPSU_logo.png" alt="CPSU Logo" class="w-[50pxpx] h-[49.73px]">
+                <img src="/assets/icons/bagong-pilipinas-logo.png" alt="BGM Logo" class="w-[50pxpx] h-[49.73px]">
+                <span class="flex flex-col items-start max-md:items-center justify-center text-left pl-3 border-l border-l-gray-300">
+                    <span class="text-[16px] font-semibold tracking-widest">CENTRAL PHILIPPINES STATE UNIVERSITY</span>
+                    <span class="text-[12px] font-semibold tracking-wide w-full flex text-left">MOISES PADILLA CAMPUS</span>
+                </span>
+            </span>
+            <span class="max-md:hidden flex flex-wrap items-center justify-center text-center gap-1 p-1">
+                <a href="https://ched.gov.ph/" target="blank"><img src="/assets/images/CHED.png" alt="ched_logo" class="w-[35px] h-[35px] pointer"></a>
+                <a href="https://www.foi.gov.ph/" target="blank"><img src="/assets/images/FOI.webp" alt="foi_logo" class="w-[35px] h-[35px] rounded-full pointer"></a>
+                <a href="https://www.dbm.gov.ph/" target="blank"><img src="/assets/images/dbm.jpg" alt="dbm_logo" class="w-[35px] h-[35px] pointer rounded-full"></a>
+                <a href="https://en.wikipedia.org/wiki/Philippine_Association_of_State_Universities_and_Colleges" target="blank"><img src="/assets/images/pasuc.webp" alt="pasuc_logo" class="w-[35px] h-[35px] rounded-full pointer"></a>
+                <a href="https://www.transparency.org/en/countries/philippines" target="blank"><img src="/assets/images/pts.jpg" alt="pts_logo" class="w-[35px] h-[35px] pointer rounded-full"></a>
+                <a href="https://ps-philgeps.gov.ph/home/" target="blank"><img src="/assets/images/ps.webp" alt="ps_logo" class="w-[65px] h-[35px] rounded-[12px] object-contain pointer"></a>
+                <a href="https://www.aaccup.com/" target="blank"><img src="/assets/images/AACCUP.png" alt="aaccup_logo" class="w-[35px] h-[35px] pointer"></a>
+            </span>
+        </div>
+
+                <div class="w-full h-auto flex justify-center items-center text-center bg-green-700 gap-5  text-[#fafafa] p-4">
+                    <ul class="max-md:hidden flex items-center justify-center text-center gap-10 text-[16px] font-bold text-[16px]">
+                        <li><a class="" href="/index.html">HOME</a></li>
+                        <div class="relative group">
+                        <button class="flex items-center gap-2 text-white">
+                            ABOUT
+                            <i class="bi bi-caret-down-fill"></i>
+                        </button>
+                        <div class="absolute left-0 z-20 hidden group-hover:block bg-white border shadow-md mt-0 rounded-lg">
+                            <ul class="w-[220px] py-2">
+                                <span class="block px-4 py-3 text-green-500">University Info</span>
+                                <a href="/templates/about.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">About</a>
+                                <a href="/templates/facilities.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Facilities</a>
+                                <a href="/templates/history.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">History</a>
+                                <a href="/templates/mandate.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Mandate</a>
+                                <a href="/templates/profile.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Profile</a>
+                                <a href="/templates/scholarship.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Scholarship</a>
+                                <a href="/templates/calendar_of_activities.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Calendar of Activities</a>
+                            </ul>
+                        </div>
+                        </div>
+                        <div class="relative group">
+                        <button class="flex items-center gap-2 text-white">
+                            ACADEMICS
+                            <i class="bi bi-caret-down-fill"></i>
+                        </button>
+                        <div class="absolute left-0 z-20 hidden group-hover:block bg-white border shadow-md mt-0 rounded-lg">
+                            <ul class="w-[250px] py-2">
+                                    <a href="/academics/program-offers.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Program Offers</a>
+                                    <a href="/academics/admission.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Admission</a>
+                                    <a href="/academics/academic_council.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Academic Council</a>
+                                    <a href="/academics/academic_updates.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Academic Updates</a>
+                                    <a href="/academics/faculty_manual.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Faculty Manual</a>
+                                    <a href="/academics/guidance.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Guidance Office</a>
+                                    <a href="/academics/library.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Library</a>
+                                    <a href="/academics/medical-dental-clinic.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Medical-Dental Clinic</a>
+                                    <a href="/academics/SSG.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Supreme Student Goverment (SSG) Activities</a>
+                            </ul>
+                        </div>
+                        </div>
+                        <div class="relative group">
+                        <button class="flex items-center gap-2 text-white">
+                            ADMINISTRATION
+                            <i class="bi bi-caret-down-fill"></i>
+                        </button>
+                        <div class="absolute left-0 z-20 hidden group-hover:block bg-white border shadow-md mt-0 rounded-lg">
+                            <ul class="w-48 py-2 items-center">
+                            <li><a href="/administration/key-officials.html" class="block px-4 py-2 text-[#15421C] hover:bg-green-900 hover:text-white">Key Officials</a></li>
+                            <li><a href="/administration/program-heads.html" class="block px-4 py-2 text-[#15421C] hover:bg-green-900 hover:text-white">Program Head</a></li>
+                            <li><a href="/administration/faculty.html" class="block px-4 py-2 text-[#15421C] hover:bg-green-900 hover:text-white">Faculty</a></li>
+                            <li><a href="/administration/administrative-functions.html" class="block px-4 py-2 text-[#15421C] hover:bg-green-900 hover:text-white">Administrative Functions</a></li>
+                            </ul>
+                        </div>
+                        </div>
+                        <div class="relative group">
+                        <button class="flex items-center gap-2 text-white">
+                            GOVERNANCE
+                            <i class="bi bi-caret-down-fill"></i>
+                        </button>
+                        <div class="absolute left-0 z-20 hidden group-hover:block bg-white border shadow-md mt-0 rounded-lg">
+                            <ul class="w-48 py-2 items-center">
+                            <li><a href="/governance/boards&regents.html" class="block px-4 py-2 text-[#15421C] hover:bg-green-900 hover:text-white">Boards & Regents</a></li>
+                            <li><a href="/governance/transparency_seal.html" class="block px-4 py-2 text-[#15421C] hover:bg-green-900 hover:text-white">Transparency Seal</a></li>
+                            </ul>
+                        </div>
+                        </div>
+                    </ul>
+                    <div class="hamburger flex max-md:w-full max-md:items-end flex-col pointer" onclick="toggleMenu()">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+
+                        <div class="menu flex flex-col top-0 left-0 h-[100dvh] w-[300px] max-md:w-[290px] bg-green-800  items-center text-center text-[#fafafa] gap-2 p-5 box-shadow ">
+                            <span class="flex flex-col items-center justify-start text-center text-white mb-1 gap-4 pt-2">
+                                    <span class="flex flex-row items-center justify-center gap-3">
+                                        <img src="assets/images/CPSU_logo.png" alt="cpsu_logo" class="w-[50px] h-[50px] object-contain">
+                                        <span class="text-[15px] w-full flex text-left font-bold px-3 py-3 border-l-4 border-white">CENTRAL PHILIPPINES STATE UNIVERSITY</span>    
+                                    </span>
+                                     <span class="font-bold">MOISES PADILLA CAMPUS</span>
+                                </span>
+                            <ul class="flex w-full flex-col gap-5 py-2 max-md:pt-5 font-[500] text-[13px]  text-[#000000] text-left px-2">
+                                <li class=" text-white p-2 rounded-[10px] hover:bg-green-900">
+                                    <a href="/index.html" class="px-3">HOME</a>
+                                </li>
+                                <div class="relative inline-block text-left items-left justify-left">
+                                        <button id="dropdownButtontwo" class="text-white hover:text-white w-full px-5 h-auto p-2 rounded-[12px] hover:bg-green-900 gap-2 flex justify-between">
+                                            <span>ABOUT</span>
+                                            <i class="bi bi-caret-down-fill"></i>
+                                        </button>
+                                        <div id="dropdownMenutwo" class="z-10 absolute mt-2 w-full bg-white border py-2 border-gray-200 rounded-[12px] shadow-lg hidden">
+                                            <span class="block px-4 text-green-500">University Info</span>
+                                            <a href="/templates/about.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">About</a>
+                                            <a href="/templates/facilities.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Facilities</a>
+                                            <a href="/templates/history.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">History</a>
+                                            <a href="/templates/mandate.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Mandate</a>
+                                            <a href="/templates/profile.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Profile</a>
+                                            <a href="/templates/scholarship.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Scholarship</a>
+                                            <a href="/templates/calendar_of_activities.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Calendar of Activities</a>
+                                      </div>
+                                  </div>
+                                  <div class="relative inline-block text-left items-left justify-left">
+                                    <button id="dropdownButton" class="text-white px-5 hover:text-white w-full h-auto p-2 rounded-[12px] hover:bg-green-900 gap-2 flex justify-between">
+                                    <span>ACADEMICS</span>
+                                    <i class="bi bi-caret-down-fill"></i>
+                                    </button>
+                                    <div id="dropdownMenu" class="z-10 absolute mt-2 w-full h-[200px] bg-white border py-2 border-gray-200 rounded-[12px] shadow-lg hidden overflow-y-auto max-h-[400px]">
+                                    <a href="/academics/program-offers.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Program Offers</a>
+                                    <a href="/academics/admission.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Admission</a>
+                                    <a href="/academics/academic_council.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Academic Council</a>
+                                    <a href="/academics/academic_updates.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Academic Updates</a>
+                                    <a href="/academics/faculty_manual.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Faculty Manual</a>
+                                    <a href="/academics/guidance.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Guidance Office</a>
+                                    <a href="/academics/library.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Library</a>
+                                    <a href="/academics/medical-dental-clinic.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Medical-Dental Clinic</a>
+                                    <a href="/academics/SSG.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Supreme Student Goverment (SSG) Activities</a>
+                                    </div>
+                                </div>
+                                    <div class="relative inline-block text-left items-left justify-left">
+                                        <button id="dropdownButtonthree" class="text-white hover:text-white w-full px-5 h-auto p-2 rounded-[12px] hover:bg-green-900 gap-2 flex justify-between">
+                                            <span>ADMINISTRATION</span>
+                                            <i class="bi bi-caret-down-fill pl-5"></i>
+                                        </button>
+                                        <div id="dropdownMenuthree" class="z-10 absolute mt-2 w-full bg-white border py-2 border-gray-200 rounded-[12px] shadow-lg hidden">
+                                            <a href="/administration/key-officials.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Key Official</a>
+                                            <a href="/administration/program-heads.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Program Head</a>
+                                            <a href="/administration/faculty.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Faculty</a>
+                                            <a href="/administration/administrative-functions.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Administrative Functions</a>
+                                      </div>
+                                  </div>
+                                  <div class="relative inline-block text-left items-left justify-left">
+                                        <button id="dropdownButtonfour" class="text-white hover:text-white w-full px-5 h-auto p-2 rounded-[12px] hover:bg-green-900 gap-2 flex justify-between">
+                                            <span>GOVERNANCE</span>
+                                            <i class="bi bi-caret-down-fill pl-5"></i>
+                                        </button>
+                                        <div id="dropdownMenufour" class="z-10 absolute mt-2 w-full bg-white border py-2 border-gray-200 rounded-[12px] shadow-lg hidden">
+                                            <a href="/governance/boards&regents.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Boards & Regents</a>
+                                            <a href="/governance/transparency_seal.html" class="block px-4 py-2 text-gray-700 hover:text-white hover:bg-green-900">Transparency Seal</a>
+                                      </div>
+                                  </div>        
+                            </ul>
+                                <div class=" w-full h-auto flex flex-col items-left justify-left text-left gap-1 p-2 py-3 max-md:pt-4">
+                                    <span class="text-[18px] text-[12px] text-white font-semibold italic">Follow us:</span>
+                                    <div class="w-full h-auto flex flex-col items-left justify-left text-left gap-1">
+                                        <span class="flex items-center gap-2 text-[12px]">
+                                            <span class="text-[18px] text-blue-500">f</span>
+                                            <a href="" target="blank" class="text-white font-semibold italic">CPSU-Moises Padilla</a>
+                                        </span>
+                                        <span class="flex items-center gap-2 text-[12px]">
+                                            <span class="text-[18px] text-blue-500">f</span>
+                                            <a href="" target="blank" class="text-white font-semibold italic">SAFE Center CPSU-MPC</a>
+                                        </span>
+                                        <span class="flex items-center gap-2 text-[12px]">
+                                            <span class="text-[18px] text-blue-500">f</span>
+                                            <a href="" target="blank" class="text-white font-semibold italic">CPSU-MPC CSS</a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="w-full h-auto flex flex-col items-left justify-left font-semibold text-left text-[13px] text-white pt-2 gap-3 p-1">
+                                    <span>System Adviser : <br> Elmilver Arquero</span>
+                                    <span>Developed by : <br> Eric John S. Solinap <br> Kurt Lourence Paguntalan <br>3rd year BSIT Students</span>
+                                </div>
+                        </div>
+                </div>
+    </div>
+
+        <div class="relative w-full h-auto flex flex-col bg-white py-10 justify-center items-center bg-no-repeat bg-cover bg-center p-1 bg-[#fafafa]" style="background-image: url(../assets/images/cpsu-moises-padilla.jpg);">
+            <div class="absolute inset-0 bg-white opacity-85 z-0"></div>
+            <span class="relative z-1 flex w-full h-auto items-center justify-evenly p-3">
+                    <span class="flex flex-col border-l-4 border-green-900 p-3">
+                        <span class="text-[24px] text-green-900 max-sm:text-[18px] font-semibold tracking-widest">ACADEMIC UPDATES</span>
+                        <span class="text-[16px] text-[#757272] max-sm:text-[12px] font-medium tracking-wide">Check out the latest academic updates</span>
+                    </span>
+                    <span></span>
+                    <span></span>
+            </span>
+            <div class="relative z-1 w-full h-auto flex flex-wrap justify-center gap-5 items-center p-5 py-5">
+                <span class="flex flex-col items-left justify-center gap-2 p-5">
+                    <a href=""><span>CPSU partners with PNP for the establishment of a Regional Training Center in the campus</span></a>
+                    <a href=""><span>CPSU - OSSA practitioners attend PAPSAS national research conference</span></a>
+                    <a href=""><span>FLP holds CPSU-wide virtual local convention</span></a>
+                    <a href=""><span>AACCUP recognizes CPSU as top 3 SUC with the highest number of level I accredited programs in 2020</span></a>
+                    <a href=""><span>Cenphilian news correspondents gear up for Abante CPSU radio broadcasting</span></a>
+                    <a href=""><span>CPSU holds inception ceremony for CHED EDUTOURISM program</span></a>
+                    <a href=""><span>GAD spearheads CPSU - wide convocation in support to national women’s month celebration</span></a>
+                    <a href=""><span>College of Business and Management Student Society holds its 3rd CBM summit</span></a>
+                    <a href=""><span>CPSU alumnus Nick Gador bags Asia Pacific Luminare Award</span></a>
+                    <a href=""><span>Sen. Gatchalian graces CPSU, Valladolid groundbreaking ceremony for the construction of Tech-Voc Institution and proposed extension class</span></a>
+                    <a href=""><span>Celebrating the month of love in the new normal: SSG’s virtual Valentine program</span></a>
+                    <a href=""><span>College of Engineering commences construction of 48M building</span></a>
+                </span>
+            </div>
+            
+        </div>
+
+        <div class="w-full h-auto flex flex-col justify-center items-center text-left pt-5 bg-green-900">
+                               <div class="relative w-full h-auto flex flex-wrap justify-center text-center gap-20 max-md:gap-10 max-sm:px-10 pt-10 bg-top bg-cover" style="background-image: url(assets/images/cssbg.jpg);">
+                                    <div class="absolute inset-0 bg-green-900"></div>
+                                    <div class="flex z-10 w-[400px] h-auto items-left flex flex-col p-1 gap-4">
+                                       <span class="flex items-left text-white justify-left text-center gap-2">
+                                            <img src="/assets/icons/CPSU_logo.png" alt="CPSU Logo" class="w-[50pxpx] h-[49.73px]">
+                                            <span class="flex flex-col items-start max-md:items-center justify-center text-left pl-3 border-l border-l-gray-300">
+                                                <span class="text-[12px] font-semibold tracking-widest">CENTRAL PHILIPPINES STATE UNIVERSITY</span>
+                                                <span class="text-[10px] font-semibold tracking-widest w-full flex text-left">MOISES PADILLA CAMPUS</span>
+                                            </span>
+                                        </span>
+                                        <span class="flex flex-col text-left text-white text-[14px]">
+                                           <span class="text-[18px] font-bold py-2">Central Philippines State University (CPSU)</span>
+                                           is a catalyst for change in Negros Occidental empowering communities 
+                                           through innovation, education, and agriculture. With 10 ISO-accredited campuses,
+                                            CPSU transforms local potential into lasting impact. 
+                                        </span>
+                                        <span class="flex gap-3 pt-2 items-center">
+                                           <a href="#"><span class="bg-white px-4 py-[4px] rounded-full text-[23px] font-semibold text-gray-500">f</span> </a>
+                                           <a href="#"><span class="bg-white px-3 py-[9px] rounded-full"><i class="bi bi-youtube text-gray-500 text-[18px]"></i></span></a>
+                                           <a href="#"><span class="bg-white px-3 py-[9px] rounded-full"><i class="bi bi-google text-gray-500 text-[18px]"></i></span></a>
+                                           <a href="#"><span class="text-gray-500 text-[18px] bg-white px-3 py-[7px] rounded-full"><i class="bi bi-instagram"></i></span></a>
+                                        </span>
+                                    </div>
+
+                                    <div class="flex z-10 max-md:w-[400px] h-auto items-left text-left flex flex-col p-1 gap-4">
+                                        <span class="text-[20px] font-bold text-white">Support</span>
+                                        <span class="flex flex-col p-3 gap-3 text-white">
+                                            <a href="#" class="hover:text-green-500"><span>Privacy</span></a>
+                                            <a href="#" class="hover:text-green-500"><span>Policy</span></a>
+                                            <a href="#" class="hover:text-green-500"><span>Support</span></a>
+                                        </span>
+                                    </div>
+
+                                    <div class="flex z-10 max-md:w-[400px] h-auto items-left text-left flex flex-col p-1 gap-4">
+                                        <span class="text-[20px] font-bold text-white">Contact us</span>
+                                        <span class="flex flex-col p-3 gap-3 items-left text-white">
+                                            <span class="text-[17px]">Central Philippines State University, <br> Moises Padilla, Negros Occidental</span>
+                                            <span>+6399-3117-4271</span>
+                                            <span>cpsu_mpc@cpsu.edu.ph</span>
+                                        </span>
+                                    </div>
+                               </div>
+                               
+                               <div class="w-full h-auto flex max-md:flex-col text-white p-4 justify-center items-center gap-3 pt-10 p-1">
+                                    <span class="flex border-r border-white px-3 gap-2 text-[17px]">
+                                        <span>Online Visitors:</span>
+                                        <span class="font-bold">205</span>
+                                    </span>
+                                    <span class="flex border-r border-white px-5 gap-2 text-[17px]">
+                                        <span>Today's Visitors:</span>
+                                        <span class="font-bold">13</span>
+                                    </span>
+                                    <span class="flex px-3 gap-2 text-[17px]">
+                                        <span>Total Page Views:</span>
+                                        <span class="font-bold">4,507</span>
+                                    </span>
+                               </div>
+
+                               <a href="#hm" class="w-full flex justify-end px-10 pb-5">
+                                    <span><i class="bi bi-chevron-up text-white text-[20px] font-bold"></i></span>
+                               </a>
+                            </div>
+
+                                <!-- <div class="w-full h-auto flex justify-center items-center text-center p-5 max-md:text-[10px] text-[16px] text-[#ADADAD] bg-[#1A1A1A]">
+                                     <span>@2023 Central Philippines State University - Moises Padilla Campus || Maintained by Management Information System Office (MISO).</span>
+                                </div> -->
+
+    <script>
+        function toggleMenu() {
+            const menutwo = document.querySelector('.menu');
+            menutwo.classList.toggle('active');
+        }
+
+        window.addEventListener('click', (e) => {
+            if (!document.querySelector('.hamburger').contains(e.target) && !document.querySelector('.menu').contains(e.target)) {
+                document.querySelector('.menu').classList.remove('active');
+            }
+        })
+
+        const button = document.getElementById('dropdownButton');
+        const menu = document.getElementById('dropdownMenu');
+
+        button.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+        });
+
+        window.addEventListener('click', (e) => {
+        if (!button.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.add('hidden');
+        }
+        });
+        const dropdownBtn = document.getElementById('dropdownButtontwo');
+        const dropdownMenu = document.getElementById('dropdownMenutwo');
+
+        dropdownBtn.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('hidden');
+        });
+
+        window.addEventListener('click', (e) => {
+        if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.add('hidden');
+        }
+        });
+
+        const buttonthree = document.getElementById('dropdownButtonthree');
+        const menuthree = document.getElementById('dropdownMenuthree');
+
+        buttonthree.addEventListener('click', () => {
+        menuthree.classList.toggle('hidden');
+        });
+
+        window.addEventListener('click', (e) => {
+        if (!buttonthree.contains(e.target) && !menuthree.contains(e.target)) {
+            menuthree.classList.add('hidden');
+        }
+        });
+        const buttonfour = document.getElementById('dropdownButtonfour');
+        const menufour = document.getElementById('dropdownMenufour');
+
+        buttonfour.addEventListener('click', () => {
+        menufour.classList.toggle('hidden');
+        });
+
+        window.addEventListener('click', (e) => {
+        if (!buttonfour.contains(e.target) && !menufour.contains(e.target)) {
+            menufour.classList.add('hidden');
+        }
+        });
+    </script>
+</body>
+</html>
